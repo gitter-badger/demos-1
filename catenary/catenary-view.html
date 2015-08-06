@@ -1,0 +1,16 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<link rel="imoprt" href="../../foundation-style.html">
+
+<polymer-element name="catenary-view">
+  <core-style ref="foundation"></core-style>
+
+  <template>
+    <div class="row">
+      <div class="columns small-12">
+        <canvas id="stage" style="border: 1px solid black" WIDTH="{{WIDTH}}" height="{{HEIGHT}}"></canvas>
+      </div>
+    </div>
+  </template>
+  <script type="application/dart" src="catenary-view.dart"></script>
+</polymer-element>

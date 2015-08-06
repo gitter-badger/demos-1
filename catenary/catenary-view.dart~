@@ -1,0 +1,109 @@
+import 'package:polymer/polymer.dart';
+import 'package:stagexl/stagexl.dart';
+import 'dart:math' as math;
+
+@CustomTag('catenary-view')
+class CatenaryViewElement extends PolymerElement {
+  @observable int WIDTH = 600;
+  @observable int HEIGHT = 600;
+
+  // StageXL Variables
+  Stage stage = null;
+  RenderLoop renderLoop = null;
+
+  CatenaryView view = null;
+
+  CatenaryViewElement.created() : super.created() {
+    StageXL.stageOptions.renderEngine = RenderEngine.Canvas2D;
+    this.stage = new Stage(shadowRoot.query('#stage'));
+    this.renderLoop = new RenderLoop()
+      ..addStage(this.stage);
+
+    this.view = new CatenaryView(WIDTH, HEIGHT);
+    this.stage.addChild(this.view);
+  }
+}
+
+class CatenaryView extends DisplayObjectContainer {
+  int WIDTH = null;
+  int HEIGHT = null;
+
+  Sprite _p1 = new Sprite();
+  Sprite _p2 = new Sprite();
+  Shape _line = new Shape();
+
+  bool currentlyDragging = false;
+
+  CatenaryView(this.WIDTH, this.HEIGHT) {
+    _p1.graphics.beginPath();
+    _p1.graphics.circle(0, 0, 5);
+    _p1.graphics.closePath();
+    _p1.graphics.fillColor(Color.Black);
+    _p1.x = WIDTH / 2 - WIDTH / 4;
+    _p1.y = HEIGHT / 2;
+    _p1.useHandCursor = true;
+
+    _p1.onMouseDown.listen((var _) {
+      this.currentlyDragging = true;
+      _p1.startDrag(false); // Don't lock center 
+    });
+
+    _p1.onMouseUp.listen((var _) {
+      _p1.stopDrag();
+      this.currentlyDragging = false;
+      this._drawCatenary(100);
+    });
+
+    this.addChild(_p1);
+
+    _p2.graphics.beginPath();
+    _p2.graphics.circle(0, 0, 5);
+    _p2.graphics.closePath();
+    _p2.graphics.fillColor(Color.Black);
+    _p2.x = WIDTH / 2 + WIDTH / 4;
+    _p2.y = HEIGHT / 2;
+    _p2.useHandCursor = true;
+
+    _p2.onMouseDown.listen((var _) {
+      this.currentlyDragging = true;
+      _p2.startDrag(false); // Don't lock center 
+    });
+
+    _p2.onMouseUp.listen((var _) {
+      _p2.stopDrag();
+      this.currentlyDragging = false;
+      this._drawCatenary(100);
+    });
+
+    this.addChild(_p2);
+
+    this.addChild(_line);
+  }
+
+  void _drawCatenary(int samples) {
+    double a = 1.0;
+
+    _line.graphics.beginPath();
+    _line.graphics.moveTo(0, 0);
+
+    int iterations = 100;
+    for (int x = 0; x < iterations; x++) {
+      double p1 = math.pow(math.E, (x / iterations) / a);
+      double p2 = math.pow(math.E, -(x / iterations) / a);
+      if (x == 0) {
+        print(p1);
+        print(p2);
+      }
+      double y = (a / 2) * (p1 + p2) * iterations;
+      _line.graphics.lineTo(x, y);
+    }
+
+    _line.graphics.closePath();
+    _line.graphics.strokeColor(Color.Black, 1);
+  }
+
+  void _onEnterFrame() {
+    _drawCatenary();
+    
+  }
+}

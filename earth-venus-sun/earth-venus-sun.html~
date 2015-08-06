@@ -1,0 +1,20 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../../packages/connorgray/foundation-style.html">
+
+<link rel="import" href="../../../../packages/paper_elements/paper_toggle_button.html">
+<link rel="import" href="../../../../packages/paper_elements/paper_button.html">
+
+<polymer-element name="earth-venus-sun">
+  <template>
+    <core-style ref="foundation"></core-style>
+
+    <style>
+     paper-button.colored {
+         background: #4285f4;
+         color: #fff;
+     }
+    </style>
+
+  </template>
+  <script type="application/dart" src="earth-venus-sun.dart"></script>
+</polymer-element>

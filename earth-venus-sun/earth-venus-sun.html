@@ -1,0 +1,35 @@
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../../packages/connorgray/foundation-style.html">
+
+<link rel="import" href="../../../../packages/paper_elements/paper_toggle_button.html">
+<link rel="import" href="../../../../packages/paper_elements/paper_button.html">
+
+<polymer-element name="earth-venus-sun">
+  <template>
+    <core-style ref="foundation"></core-style>
+
+    <style>
+     paper-button.colored {
+         background: #4285f4;
+         color: #fff;
+     }
+    </style>
+
+    <div class="row">
+      <div class="columns small-12">
+        <canvas id="stage" style="border: 1px solid black" width="600" height="600"></canvas>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-12">
+        <paper-button raised class="colored" on-click="{{pauseSystem}}">Pause</paper-button>
+        <paper-button raised class="colored" on-click="{{unpauseSystem}}">Unpause</paper-button>
+
+        <paper-toggle-button on-change="{{exactRatioToggle}}">Toggle</paper-toggle-button>
+      </div>
+    </div>
+
+  </template>
+  <script type="application/dart" src="earth-venus-sun.dart"></script>
+</polymer-element>
