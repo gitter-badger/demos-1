@@ -1,7 +1,0 @@
-<link rel="import" href="../../../../packages/polymer/polymer.html">
-
-<polymer-element name="catenary-view">
-  <template>
-  </template>
-  <script type="application/dart" src="catenary-view.dart"></script>
-</polymer-element>
